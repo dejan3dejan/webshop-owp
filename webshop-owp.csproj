@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>webshop_owp</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\Services\" />
+      <Folder Include="Data\Static\" />
+      <Folder Include="Data\ViewModels\" />
+    </ItemGroup>
+
+</Project>
