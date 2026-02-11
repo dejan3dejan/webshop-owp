@@ -1,0 +1,19 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace webshop_owp.Models
+{
+    public class Category
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Category name is required")]
+        [Display(Name = "Category Name")]
+        public string Name { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        public List<Product> Products { get; set; }
+    }
+}
