@@ -1,9 +1,10 @@
+using webshop_owp.Data.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace webshop_owp.Models
 {
-    public class Product
+    public class Product : IEntityBase
     {
         [Key]
         public int Id { get; set; }
@@ -21,6 +22,6 @@ namespace webshop_owp.Models
 
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
     }
 }

@@ -8,8 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Data\Services\" />
-      <Folder Include="Data\ViewModels\" />
       <Folder Include="Migrations\" />
     </ItemGroup>
 

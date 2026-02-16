@@ -1,0 +1,25 @@
+@model webshop_owp.Models.Category
+
+@{
+    ViewData["Title"] = "Details for " + Model.Name;
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <h1>Details for @Model.Name</h1>
+
+        <div class="form-group mb-2">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" readonly />
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="control-label"></label>
+            <input asp-for="Description" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+            <a class="btn btn-outline-success float-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+        </div>
+    </div>
+</div>

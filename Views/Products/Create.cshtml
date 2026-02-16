@@ -1,0 +1,61 @@
+@model webshop_owp.Data.ViewModels.NewProductVM
+
+@{
+    ViewData["Title"] = "Create a new product";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Create a new product</h4>
+        </p>
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="Price" class="control-label"></label>
+                                <input asp-for="Price" type="number" class="form-control" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="ImageUrl" class="control-label"></label>
+                                <input asp-for="ImageUrl" class="form-control" />
+                                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label asp-for="CategoryId" class="control-label"></label>
+                                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-2">
+                                <label asp-for="Description" class="control-label"></label>
+                                <textarea asp-for="Description" class="form-control"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Create" class="btn btn-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show all</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

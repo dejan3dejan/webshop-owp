@@ -10,15 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4157373b-0a61-47f3-a8c9-babf14b56e04" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Data/AppDbContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/AppDbInitializer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Category.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Order.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/OrderItem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Product.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controllers/CategoriesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Services/CategoriesService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Services/ICategoriesService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Services/IProductsService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Services/ProductsService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/Categories/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.webshop-owp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.webshop-owp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ProductsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ProductsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Order.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/OrderItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/OrderItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Product.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webshop-owp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/webshop-owp.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,29 +36,37 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "dejan3dejan"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dejan3dejan&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/dejan3dejan/webshop-owp.git",
-    "accountId": "4a875b7a-1fe9-4f9c-8f1f-eef1a6fccfae"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dejan3dejan/webshop-owp.git&quot;,
+    &quot;accountId&quot;: &quot;4a875b7a-1fe9-4f9c-8f1f-eef1a6fccfae&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Controllers/CategoriesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/AppDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/AppDbInitializer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/Services/CategoriesService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/Services/ICategoriesService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/Services/IProductsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/Services/ProductsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/Static/UserRoles.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/ApplicationUser.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Models/Category.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Models/Order.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Models/OrderItem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Models/Product.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="39TrOttkk8F3hWPZeCdnxusXj4B" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -63,24 +75,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.webshop-owp: IIS Express.executor": "Run",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.webshop-owp: IIS Express.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.webshop-owp: IIS Express">
     <configuration name="webshop-owp: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/webshop-owp.csproj" />
@@ -139,6 +151,9 @@
       <option name="presentableId" value="Default" />
       <updated>1770730874730</updated>
       <workItem from="1770730876654" duration="5753000" />
+      <workItem from="1770767776979" duration="6649000" />
+      <workItem from="1770885610538" duration="4176000" />
+      <workItem from="1771159127681" duration="2287000" />
     </task>
     <servers />
   </component>

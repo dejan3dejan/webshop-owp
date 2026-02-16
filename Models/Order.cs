@@ -1,8 +1,9 @@
+using webshop_owp.Data.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace webshop_owp.Models
 {
-    public class Order
+    public class Order : IEntityBase
     {
         [Key]
         public int Id { get; set; }

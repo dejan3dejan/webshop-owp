@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using webshop_owp.Data;
+using webshop_owp.Data.Cart;
+using webshop_owp.Data.Services;
 using webshop_owp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Authentication and Authorization configuration
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
+
+// Services configuration
+builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
@@ -35,6 +44,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
 app.UseAuthentication();
 
 app.UseAuthorization();

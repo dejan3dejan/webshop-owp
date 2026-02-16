@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
+using webshop_owp.Data.Base;
+
 namespace webshop_owp.Models
 {
-    public class Category
+    public class Category : IEntityBase
     {
         [Key]
         public int Id { get; set; }
@@ -14,6 +16,6 @@ namespace webshop_owp.Models
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        public List<Product> Products { get; set; }
+        public List<Product>? Products { get; set; }
     }
 }
