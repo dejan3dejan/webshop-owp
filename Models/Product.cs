@@ -20,6 +20,12 @@ namespace webshop_owp.Models
         [Display(Name = "Image URL")]
         public string ImageUrl { get; set; }
 
+        [Display(Name = "Inventory Stock")]
+        public int StockAmount { get; set; } = 10;
+
+        [Display(Name = "Discount %")]
+        public int DiscountPercentage { get; set; } = 0;
+
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category? Category { get; set; }

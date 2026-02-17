@@ -23,7 +23,9 @@ namespace webshop_owp.Data
                     {
                         new Category() { Name = "Smartphones", Description = "Latest mobile phones and devices" },
                         new Category() { Name = "Laptops", Description = "Powerful laptops for work and gaming" },
-                        new Category() { Name = "Accessories", Description = "Headphones, chargers and more" }
+                        new Category() { Name = "Accessories", Description = "Headphones, chargers and more" },
+                        new Category() { Name = "Monitors", Description = "Crystal clear displays for work and play" },
+                        new Category() { Name = "Gaming", Description = "Consoles, controllers and gaming gear" }
                     });
                     context.SaveChanges();
                 }
@@ -33,36 +35,42 @@ namespace webshop_owp.Data
                 {
                     context.Products.AddRange(new List<Product>()
                     {
-                        new Product()
-                        {
-                            Name = "iPhone 15 Pro",
-                            Description = "Apple's latest flagship with Titanium design",
-                            Price = 999.99,
-                            ImageUrl = "https://cdsassets.apple.com/live/7WUAS350/images/tech-specs/iphone-15-pro-max.png",
-                            CategoryId = 1 // Smartphones
-                        },
-                        new Product()
-                        {
-                            Name = "MacBook Air M2",
-                            Description = "Supercharged by M2 chip, thin and light",
-                            Price = 1199.00,
-                            ImageUrl = "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9",
-                            CategoryId = 2 // Laptops
-                        },
-                        new Product()
-                        {
-                            Name = "Sony WH-1000XM5",
-                            Description = "Industry leading noise canceling headphones",
-                            Price = 349.50,
-                            ImageUrl = "https://backend.gigatron.rs/media/catalog/product/cache/d62e1a0582bf7257bddc609f302ce89c/s/o/sony-slusalice-wh-1000xm5-6669f98412c3c.jpg",
-                            CategoryId = 3 // Accessories
-                        }
+                        new Product() { Name = "iPhone 15 Pro", Description = "Apple's latest flagship with Titanium design", Price = 999.99, ImageUrl = "https://picsum.photos/seed/iphone/400/300", CategoryId = 1, StockAmount = 10 },
+                        new Product() { Name = "Samsung Galaxy S24", Description = "AI-powered smartphone with amazing camera", Price = 899.00, ImageUrl = "https://picsum.photos/seed/samsung/400/300", CategoryId = 1, StockAmount = 12 },
+                        new Product() { Name = "Google Pixel 8", Description = "The best of Google with pure Android", Price = 699.00, ImageUrl = "https://picsum.photos/seed/pixel/400/300", CategoryId = 1, StockAmount = 8 },
+                        
+                        new Product() { Name = "MacBook Air M2", Description = "Supercharged by M2 chip, thin and light", Price = 1199.00, ImageUrl = "https://picsum.photos/seed/macbook/400/300", CategoryId = 2, StockAmount = 5 },
+                        new Product() { Name = "Dell XPS 15", Description = "Performance meets elegance in this 15-inch laptop", Price = 1499.00, ImageUrl = "https://picsum.photos/seed/dell/400/300", CategoryId = 2, StockAmount = 7 },
+                        new Product() { Name = "ASUS ROG Zephyrus", Description = "Top tier gaming performance in a portable form", Price = 1799.99, ImageUrl = "https://picsum.photos/seed/asus/400/300", CategoryId = 2, StockAmount = 3 },
+                        
+                        new Product() { Name = "Sony WH-1000XM5", Description = "Industry leading noise canceling headphones", Price = 349.50, ImageUrl = "https://picsum.photos/seed/sony/400/300", CategoryId = 3, StockAmount = 15 },
+                        new Product() { Name = "Logitech MX Master 3S", Description = "The ultimate mouse for productivity and comfort", Price = 99.00, ImageUrl = "https://picsum.photos/seed/logitech/400/300", CategoryId = 3, StockAmount = 20 },
+                        new Product() { Name = "Keychron K2", Description = "Mechanical keyboard with hot-swappable switches", Price = 89.00, ImageUrl = "https://picsum.photos/seed/keyboard/400/300", CategoryId = 3, StockAmount = 10 },
+                        
+                        new Product() { Name = "LG UltraGear 27\"", Description = "144Hz Gaming monitor with G-Sync support", Price = 299.99, ImageUrl = "https://picsum.photos/seed/lgmon/400/300", CategoryId = 4, StockAmount = 6 },
+                        new Product() { Name = "Dell UltraSharp 32\"", Description = "4K USB-C Hub Monitor for professional work", Price = 749.00, ImageUrl = "https://picsum.photos/seed/dellmon/400/300", CategoryId = 4, StockAmount = 4 },
+                        
+                        new Product() { Name = "PlayStation 5", Description = "Experience lightning-fast loading and immersive gaming", Price = 499.99, ImageUrl = "https://picsum.photos/seed/ps5/400/300", CategoryId = 5, StockAmount = 10 },
+                        new Product() { Name = "Xbox Series X", Description = "The fastest, most powerful Xbox ever", Price = 499.99, ImageUrl = "https://picsum.photos/seed/xbox/400/300", CategoryId = 5, StockAmount = 10 },
+                        new Product() { Name = "Nintendo Switch OLED", Description = "Vibrant 7-inch OLED screen for gaming on the go", Price = 349.00, ImageUrl = "https://picsum.photos/seed/switch/400/300", CategoryId = 5, StockAmount = 12 }
+                    });
+                    context.SaveChanges();
+                }
+
+                // Coupons
+                if (!context.Coupons.Any())
+                {
+                    context.Coupons.AddRange(new List<Coupon>()
+                    {
+                        new Coupon() { Code = "TECH10", DiscountPercentage = 10 },
+                        new Coupon() { Code = "WELCOME20", DiscountPercentage = 20 },
+                        new Coupon() { Code = "FREESHIP", DiscountPercentage = 5 }
                     });
                     context.SaveChanges();
                 }
             }
         }
-        
+
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())

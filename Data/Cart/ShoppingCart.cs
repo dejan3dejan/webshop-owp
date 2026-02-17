@@ -71,7 +71,21 @@ namespace webshop_owp.Data.Cart
             return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Include(n => n.Product).ToList());
         }
 
-        public double GetShoppingCartTotal() => _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Select(n => n.Product.Price * n.Amount).Sum();
+        public double GetShoppingCartTotal()
+        {
+            var items = _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Include(n => n.Product).ToList();
+            double total = 0;
+            foreach (var item in items)
+            {
+                var price = item.Product.Price;
+                if (item.Product.DiscountPercentage > 0)
+                {
+                    price = price * (1 - item.Product.DiscountPercentage / 100.0);
+                }
+                total += price * item.Amount;
+            }
+            return total;
+        }
 
         public async Task ClearShoppingCartAsync()
         {

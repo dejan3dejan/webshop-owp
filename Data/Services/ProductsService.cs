@@ -26,7 +26,8 @@ namespace webshop_owp.Data.Services
                 Description = data.Description,
                 Price = data.Price,
                 ImageUrl = data.ImageUrl,
-                CategoryId = data.CategoryId
+                CategoryId = data.CategoryId,
+                StockAmount = data.StockAmount
             };
             await _context.Products.AddAsync(newProduct);
             await _context.SaveChangesAsync();
@@ -43,6 +44,7 @@ namespace webshop_owp.Data.Services
                 dbProduct.Price = data.Price;
                 dbProduct.ImageUrl = data.ImageUrl;
                 dbProduct.CategoryId = data.CategoryId;
+                dbProduct.StockAmount = data.StockAmount;
                 await _context.SaveChangesAsync();
             }
         }

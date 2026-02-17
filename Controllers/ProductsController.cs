@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using webshop_owp.Data.Services;
 using webshop_owp.Data.Static;
 using webshop_owp.Data.ViewModels;
 using webshop_owp.Models;
+using webshop_owp.Data.Base;
 
 namespace webshop_owp.Controllers
 {
@@ -12,17 +14,44 @@ namespace webshop_owp.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsService _service;
+        private readonly webshop_owp.Data.AppDbContext _context;
 
-        public ProductsController(IProductsService service)
+        public ProductsController(IProductsService service, webshop_owp.Data.AppDbContext context)
         {
             _service = service;
+            _context = context;
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId, int pageNumber = 1)
         {
-            var allProducts = await _service.GetAllAsync(n => n.Category);
-            return View(allProducts);
+            int pageSize = 6;
+            var productsQuery = _context.Products.Include(n => n.Category).AsQueryable();
+
+            if (categoryId.HasValue)
+            {
+                productsQuery = productsQuery.Where(p => p.CategoryId == categoryId.Value);
+                ViewBag.CurrentCategoryId = categoryId;
+            }
+
+            var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery.AsNoTracking(), pageNumber, pageSize);
+            return View(paginatedProducts);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Filter(string searchString, int pageNumber = 1)
+        {
+            int pageSize = 6;
+            var productsQuery = _context.Products.Include(n => n.Category).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                productsQuery = productsQuery.Where(n => n.Name.Contains(searchString) || n.Description.Contains(searchString));
+                ViewBag.CurrentFilter = searchString;
+            }
+
+            var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery.AsNoTracking(), pageNumber, pageSize);
+            return View("Index", paginatedProducts);
         }
 
         [AllowAnonymous]
@@ -34,7 +63,6 @@ namespace webshop_owp.Controllers
             return View(productDetails);
         }
 
-        // GET: Products/Create
         public async Task<IActionResult> Create()
         {
             var productDropdownsData = await _service.GetNewProductDropdownsValues();
@@ -53,10 +81,10 @@ namespace webshop_owp.Controllers
             }
 
             await _service.AddNewProductAsync(product);
+            TempData["Success"] = "Product created successfully!";
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Products/Edit/1
         public async Task<IActionResult> Edit(int id)
         {
             var productDetails = await _service.GetByIdAsync(id);
@@ -91,10 +119,10 @@ namespace webshop_owp.Controllers
             }
 
             await _service.UpdateProductAsync(product);
+            TempData["Success"] = "Product updated successfully!";
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Products/Delete/1
         public async Task<IActionResult> Delete(int id)
         {
             var productDetails = await _service.GetByIdAsync(id, n => n.Category);
@@ -109,6 +137,7 @@ namespace webshop_owp.Controllers
             if (productDetails == null) return View("NotFound");
 
             await _service.DeleteAsync(id);
+            TempData["Success"] = "Product deleted successfully!";
             return RedirectToAction(nameof(Index));
         }
     }

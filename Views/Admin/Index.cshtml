@@ -1,0 +1,122 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1 class="fw-bold text-dark"><i class="bi bi-speedometer2"></i> Admin Dashboard</h1>
+            <p class="text-muted">Welcome to the management panel. Here you can monitor your store's performance.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Stats Cards -->
+        <div class="col-md-3 mb-4">
+            <div class="card bg-primary text-white shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-uppercase small">Total Products</h6>
+                            <h2 class="display-6 fw-bold mb-0">@ViewBag.ProductsCount</h2>
+                        </div>
+                        <i class="bi bi-laptop fs-1 opacity-50"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between small">
+                    <a class="text-white stretched-link text-decoration-none" asp-controller="Admin" asp-action="Inventory">Manage Stock & Discounts</a>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card bg-success text-white shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-uppercase small">Categories</h6>
+                            <h2 class="display-6 fw-bold mb-0">@ViewBag.CategoriesCount</h2>
+                        </div>
+                        <i class="bi bi-tags fs-1 opacity-50"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between small">
+                    <a class="text-white stretched-link text-decoration-none" asp-controller="Categories" asp-action="Index">Manage Categories</a>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card bg-warning text-white shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-uppercase small">New Orders</h6>
+                            <h2 class="display-6 fw-bold mb-0">@ViewBag.OrdersCount</h2>
+                        </div>
+                        <i class="bi bi-cart-check fs-1 opacity-50"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between small">
+                    <a class="text-white stretched-link text-decoration-none" asp-controller="Orders" asp-action="Index">View All Orders</a>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card bg-info text-white shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-uppercase small">Total Users</h6>
+                            <h2 class="display-6 fw-bold mb-0">@ViewBag.UsersCount</h2>
+                        </div>
+                        <i class="bi bi-people fs-1 opacity-50"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between small">
+                    <a class="text-white stretched-link text-decoration-none" asp-controller="Account" asp-action="Users">Manage Users</a>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="mb-0 fw-bold">Quick Management Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Products" asp-action="Create" class="btn btn-outline-primary btn-lg w-100 py-4">
+                                <i class="bi bi-plus-circle fs-3 d-block mb-2"></i> Add New Product
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Categories" asp-action="Create" class="btn btn-outline-success btn-lg w-100 py-4">
+                                <i class="bi bi-folder-plus fs-3 d-block mb-2"></i> Create Category
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Orders" asp-action="Index" class="btn btn-outline-warning btn-lg w-100 py-4 text-dark">
+                                <i class="bi bi-file-earmark-text fs-3 d-block mb-2 text-dark"></i> Recent Orders
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Account" asp-action="Users" class="btn btn-outline-info btn-lg w-100 py-4">
+                                <i class="bi bi-person-gear fs-3 d-block mb-2"></i> User List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

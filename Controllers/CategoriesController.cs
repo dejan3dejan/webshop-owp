@@ -23,7 +23,6 @@ namespace webshop_owp.Controllers
             return View(allCategories);
         }
         
-        // GET: Categories/Create
         public IActionResult Create()
         {
             return View();
@@ -44,7 +43,6 @@ namespace webshop_owp.Controllers
             return View(categoryDetails);
         }
 
-        //GET: Categories/Edit/1
         public async Task<IActionResult> Edit(int id)
         {
             var categoryDetails = await _service.GetByIdAsync(id);
@@ -59,7 +57,6 @@ namespace webshop_owp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //GET: Categories/Delete/1
         public async Task<IActionResult> Delete(int id)
         {
             var categoryDetails = await _service.GetByIdAsync(id);

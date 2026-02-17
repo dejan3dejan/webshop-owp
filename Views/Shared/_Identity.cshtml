@@ -28,6 +28,12 @@ else
             @if (User.IsInRole("Admin"))
             {
                 <li>
+                    <a class="dropdown-item fw-bold text-primary" asp-controller="Admin" asp-action="Index">
+                        <i class="bi bi-speedometer2"></i> Admin Dashboard
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
                     <a class="dropdown-item" asp-controller="Account" asp-action="Users">
                         <i class="bi bi-people"></i> Users
                     </a>

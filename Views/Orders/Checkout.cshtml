@@ -1,0 +1,56 @@
+@model webshop_owp.Data.ViewModels.CheckoutVM
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="row mt-4">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-sm border-0 rounded-3 p-4">
+            <h2 class="fw-bold mb-4"><i class="bi bi-credit-card"></i> Checkout Details</h2>
+            
+            <form asp-action="CompleteOrder" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FullName" class="form-label fw-bold"></label>
+                        <input asp-for="FullName" class="form-control" placeholder="Enter your full name" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Email" class="form-label fw-bold"></label>
+                        <input asp-for="Email" class="form-control" placeholder="example@mail.com" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Address" class="form-label fw-bold"></label>
+                    <input asp-for="Address" class="form-control" placeholder="Street address, apartment, suite..." />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="City" class="form-label fw-bold"></label>
+                    <input asp-for="City" class="form-control" placeholder="Your city" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <div class="bg-light p-3 rounded-3 mb-4">
+                    <h5 class="fw-bold"><i class="bi bi-info-circle"></i> Order Summary</h5>
+                    <p class="mb-0 small text-muted">By clicking "Place Order", you agree to our terms and conditions. Payment will be processed upon delivery.</p>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a class="btn btn-outline-secondary px-4" asp-action="ShoppingCart">
+                        <i class="bi bi-arrow-left"></i> Back to Cart
+                    </a>
+                    <button type="submit" class="btn btn-success btn-lg px-5 shadow-sm">
+                        Place Order <i class="bi bi-check-circle ms-2"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -7,12 +7,40 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        html, body { height: 100%; margin: 0; }
+        body { background-color: #f4f7f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; }
+        .content-wrapper { flex: 1 0 auto; }
+        footer { flex-shrink: 0; }
+        
+        .card { transition: all 0.3s cubic-bezier(.25,.8,.25,1); border-radius: 12px; border: none; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.08); }
+        .navbar { box-shadow: 0 2px 10px rgba(0,0,0,.05); padding: 0.8rem 1rem; }
+        .navbar-brand { letter-spacing: -1px; }
+        .btn-success { background-color: #2ecc71; border: none; padding: 10px 20px; }
+        .btn-success:hover { background-color: #27ae60; }
+        .btn-primary { background-color: #3498db; border: none; }
+        .pagination .page-link { border-radius: 20px; margin: 0 3px; border: none; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .pagination .page-item.active .page-link { background-color: #3498db; color: white; }
+        
+        /* Dropdown on Hover */
+        @@media (min-width: 992px) {
+            .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Products" asp-action="Index">TechShop</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white mb-4 sticky-top">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand fw-bold text-primary fs-3" asp-area="" asp-controller="Products" asp-action="Index">
+                    <i class="bi bi-cpu-fill"></i> TechShop
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,32 +48,109 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Products" asp-action="Index"><i class="bi bi-laptop"></i> Products</a>
+                            <a class="nav-link text-dark fw-medium" asp-controller="Products" asp-action="Index">Products</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Categories" asp-action="Index"><i class="bi bi-tags"></i> Categories</a>
-                        </li>
+                        @await Component.InvokeAsync("CategoryDropDown")
                     </ul>
 
-                    <partial name="_Identity.cshtml" />
+                    <form class="d-flex mx-auto" asp-controller="Products" asp-action="Filter" style="width: 35%;">
+                        <div class="input-group">
+                            <input name="searchString" type="text" class="form-control border-end-0 bg-light" placeholder="Search for hardware..." aria-label="Search">
+                            <button class="btn btn-outline-primary border-start-0 bg-light" type="submit"><i class="bi bi-search"></i></button>
+                        </div>
+                    </form>
+
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark position-relative me-3" asp-controller="Orders" asp-action="ShoppingCart">
+                                <i class="bi bi-cart3 fs-4"></i> 
+                                @await Component.InvokeAsync("ShoppingCartSummary")
+                            </a>
+                        </li>
+                        <partial name="_Identity.cshtml" />
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    
+    <div class="content-wrapper">
+        <div class="container-fluid px-5">
+            <main role="main" class="pb-5">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted bg-white py-4">
         <div class="container">
-            &copy; 2026 - TechShop
+            <div class="row">
+                <div class="col-md-4 text-start">
+                    <h5 class="text-primary fw-bold">TechShop</h5>
+                    <p class="small">Your premium destination for high-end electronics and computer hardware.</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0">&copy; 2026 - TechShop Limited</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <i class="bi bi-facebook me-2"></i>
+                    <i class="bi bi-twitter-x me-2"></i>
+                    <i class="bi bi-instagram"></i>
+                </div>
+            </div>
         </div>
     </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        $(document).ready(function() {
+            toastr.options = { "closeButton": true, "progressBar": true, "positionClass": "toast-bottom-right" };
+
+            @if (TempData["Success"] != null) { <text>toastr.success('@TempData["Success"]');</text> }
+            @if (TempData["Error"] != null) { <text>toastr.error('@TempData["Error"]');</text> }
+
+            // Add to Cart AJAX with Popup
+            $(document).on("click", ".add-to-cart-btn", function(e) {
+                e.preventDefault();
+                var productId = $(this).data("id");
+                var productName = $(this).data("name");
+
+                $.ajax({
+                    url: '/Orders/AddToShoppingCart/' + productId,
+                    type: 'POST',
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                title: 'Added to Cart!',
+                                text: productName + ' is now in your shopping cart.',
+                                icon: 'success',
+                                showCancelButton: true,
+                                confirmButtonColor: '#2ecc71',
+                                cancelButtonColor: '#3498db',
+                                confirmButtonText: '<i class="bi bi-cart-check"></i> Go to Cart',
+                                cancelButtonText: 'Continue Shopping'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/Orders/ShoppingCart';
+                                } else {
+                                    location.reload(); // Refresh badge
+                                }
+                            });
+                        }
+                    },
+                    error: function() {
+                        toastr.error("Could not add item to cart.");
+                    }
+                });
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

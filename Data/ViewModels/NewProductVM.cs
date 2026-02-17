@@ -18,9 +18,14 @@ namespace webshop_owp.Data.ViewModels
         [Required(ErrorMessage = "Price is required")]
         public double Price { get; set; }
 
-        [Display(Name = "Product image URL")]
+        [Display(Name = "Image URL")]
         [Required(ErrorMessage = "Image URL is required")]
         public string ImageUrl { get; set; }
+
+        [Display(Name = "Stock Quantity")]
+        [Required(ErrorMessage = "Stock quantity is required")]
+        [Range(0, 1000, ErrorMessage = "Stock must be between 0 and 1000")]
+        public int StockAmount { get; set; }
 
         [Display(Name = "Select a category")]
         [Required(ErrorMessage = "Product category is required")]

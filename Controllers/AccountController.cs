@@ -43,6 +43,7 @@ namespace webshop_owp.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
+                        TempData["Success"] = "Welcome back, " + user.FullName + "!";
                         return RedirectToAction("Index", "Products");
                     }
                 }
@@ -77,7 +78,15 @@ namespace webshop_owp.Controllers
             var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
 
             if (newUserResponse.Succeeded)
+            {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+                TempData["Success"] = "Registration successful!";
+            }
+            else
+            {
+                TempData["Error"] = "Registration failed. Please check password requirements.";
+                return View(registerVM);
+            }
 
             return View("RegisterCompleted");
         }
@@ -86,6 +95,7 @@ namespace webshop_owp.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            TempData["Info"] = "You have been logged out.";
             return RedirectToAction("Index", "Products");
         }
 

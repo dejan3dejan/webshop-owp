@@ -1,50 +1,79 @@
 @using webshop_owp.Data.Static
-@model IEnumerable<Product>
+@using webshop_owp.Data.Base
+@model PaginatedList<Product>
 
 @{
-    ViewData["Title"] = "List of Products";
+    ViewData["Title"] = "TechShop - Products";
 }
 
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-md-4 col-xs-6 border-primary mb-3">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-12">
-                        <div class="card-header text-white bg-info">
-                            <p class="card-text">
-                                <h5 class="card-title">
-                                    @item.Name
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
-                                    {
-                                        <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
-                                    }
-                                </h5>
-                            </p>
-                        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                <div class="card-header bg-white border-0 pt-3 pb-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="text-muted small mb-0 text-uppercase">@item.Category.Name</h6>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
+                        {
+                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                        }
                     </div>
-                    <div class="col-md-6">
-                        <img src="@item.ImageUrl" width="100%" alt="@item.Name">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <p class="card-text">@item.Description</p>
-                            <p class="card-text"><b>Category: </b>@item.Category.Name</p>
-                            <p class="card-text"><b>Price: </b>@item.Price.ToString("c")</p>
+                    <h5 class="card-title fw-bold mt-1 text-truncate">@item.Name</h5>
+                </div>
+                
+                <div class="position-relative">
+                    <img src="@item.ImageUrl" class="card-img-top" style="height: 200px; object-fit: contain; padding: 15px;" alt="@item.Name">
+                    @if(item.StockAmount <= 0)
+                    {
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 shadow">Out of Stock</span>
+                    }
+                    else if(item.StockAmount <= 3)
+                    {
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 shadow">Only @item.StockAmount left</span>
+                    }
+                    
+                    @if(item.DiscountPercentage > 0)
+                    {
+                        <span class="badge bg-primary position-absolute top-0 start-0 m-3 shadow">-@item.DiscountPercentage%</span>
+                    }
+                </div>
+
+                <div class="card-body pt-0">
+                    <p class="card-text text-muted small" style="height: 3rem; overflow: hidden;">@item.Description</p>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div>
+                            @if (item.DiscountPercentage > 0)
+                            {
+                                <span class="h5 fw-bold mb-0 text-primary">@((item.Price * (1 - item.DiscountPercentage / 100.0)).ToString("c"))</span>
+                                <span class="text-muted small text-decoration-line-through ms-2">@item.Price.ToString("c")</span>
+                            }
+                            else
+                            {
+                                <span class="h5 fw-bold mb-0 text-primary">@item.Price.ToString("c")</span>
+                            }
                         </div>
+                        <span class="text-muted small"><i class="bi bi-box"></i> @item.StockAmount</span>
                     </div>
-                    <div class="col-md-12">
-                        <div class="card-footer ">
-                            <p class="card-text">
-                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
-                                    <i class="bi bi-eye-fill"></i> Show Details
-                                </a>
-                                <a class="btn btn-success text-white" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Id">
-                                    <i class="bi bi-cart-plus"></i> Add to Cart
-                                </a>
-                            </p>
-                        </div>
+                </div>
+
+                <div class="card-footer bg-white border-0 pb-3 pt-0">
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@item.Id">
+                            <i class="bi bi-info-circle"></i> Details
+                        </a>
+                        @if (item.StockAmount > 0)
+                        {
+                            <button class="btn btn-success text-white add-to-cart-btn" data-id="@item.Id" data-name="@item.Name">
+                                <i class="bi bi-cart-plus"></i> Add to Cart
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary text-white" disabled>
+                                <i class="bi bi-x-circle"></i> Out of Stock
+                            </button>
+                        }
                     </div>
                 </div>
             </div>
@@ -52,11 +81,54 @@
     }
 </div>
 
+@* Pagination *@
+<div class="d-flex justify-content-center mt-4">
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item @prevDisabled">
+                <a asp-action="Index"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-categoryId="@ViewBag.CurrentCategoryId"
+                   asp-route-searchString="@ViewBag.CurrentFilter"
+                   class="page-link shadow-sm">
+                    <i class="bi bi-chevron-left"></i>
+                </a>
+            </li>
+            
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                    <a asp-action="Index" 
+                       asp-route-pageNumber="@i" 
+                       asp-route-categoryId="@ViewBag.CurrentCategoryId"
+                       asp-route-searchString="@ViewBag.CurrentFilter"
+                       class="page-link shadow-sm">@i</a>
+                </li>
+            }
+
+            <li class="page-item @nextDisabled">
+                <a asp-action="Index"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-categoryId="@ViewBag.CurrentCategoryId"
+                   asp-route-searchString="@ViewBag.CurrentFilter"
+                   class="page-link shadow-sm">
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
 {
-    <div style="position: fixed; right: 25px; bottom: 25px;" class="text-white">
-        <a asp-controller="Products" asp-action="Create" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Add New
+    <div style="position: fixed; right: 25px; bottom: 25px; z-index: 1000;" class="text-white">
+        <a asp-controller="Products" asp-action="Create" class="btn btn-primary btn-lg rounded-circle shadow-lg">
+            <i class="bi bi-plus-lg"></i>
         </a>
     </div>
 }

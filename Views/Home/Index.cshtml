@@ -1,8 +1,112 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model List<Product>
+
+@{
+    ViewData["Title"] = "Welcome to TechShop";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid px-0">
+    <!-- Hero Section -->
+    <div class="bg-primary text-white py-5 mb-5 shadow-sm" style="background: linear-gradient(135deg, #0d6efd 0%, #004aad 100%);">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-3 fw-bold mb-3">Upgrade Your Tech Game</h1>
+                    <p class="lead mb-4 opacity-75">Discover the latest in high-end electronics, from flagship smartphones to powerful gaming rigs. Quality guaranteed.</p>
+                    <div class="d-flex gap-3">
+                        <a asp-controller="Products" asp-action="Index" class="btn btn-light btn-lg px-4 fw-bold text-primary border-0 shadow-sm">
+                            <i class="bi bi-bag-fill me-2"></i> Shop Now
+                        </a>
+                        <a href="#featured" class="btn btn-outline-light btn-lg px-4">View Featured</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block text-center">
+                    <i class="bi bi-cpu text-white opacity-25" style="font-size: 15rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container mb-5">
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <div class="p-4 rounded-3 bg-white shadow-sm h-100 border-bottom border-primary border-3">
+                    <i class="bi bi-truck text-primary fs-1 mb-3"></i>
+                    <h4 class="fw-bold">Free Shipping</h4>
+                    <p class="text-muted small mb-0">On all orders over $500. Fast and secure delivery to your doorstep.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 rounded-3 bg-white shadow-sm h-100 border-bottom border-success border-3">
+                    <i class="bi bi-shield-check text-success fs-1 mb-3"></i>
+                    <h4 class="fw-bold">Warranty Included</h4>
+                    <p class="text-muted small mb-0">Minimum 2-year warranty on all electronic devices and hardware components.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 rounded-3 bg-white shadow-sm h-100 border-bottom border-warning border-3">
+                    <i class="bi bi-headset text-warning fs-1 mb-3"></i>
+                    <h4 class="fw-bold">24/7 Support</h4>
+                    <p class="text-muted small mb-0">Our tech experts are always here to help you with your setup and issues.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Products Section -->
+    <div id="featured" class="container py-5">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h2 class="fw-bold mb-0">Featured Products</h2>
+                <p class="text-muted">Handpicked selection of our newest arrivals</p>
+            </div>
+            <a asp-controller="Products" asp-action="Index" class="text-primary text-decoration-none fw-bold">
+                View All <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="p-4 text-center">
+                            <img src="@item.ImageUrl" class="img-fluid" style="height: 180px; object-fit: contain;" alt="@item.Name">
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-light text-primary text-uppercase px-2 py-1 small">@item.Category.Name</span>
+                                <span class="fw-bold text-primary">@item.Price.ToString("c")</span>
+                            </div>
+                            <h5 class="card-title fw-bold mb-2">@item.Name</h5>
+                            <p class="card-text text-muted small">@item.Description</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 pb-4">
+                            <div class="d-grid gap-2">
+                                <a class="btn btn-primary" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="container py-5">
+        <div class="rounded-4 p-5 text-center text-white" style="background-color: #1a1a1a;">
+            <h2 class="fw-bold mb-3">Join the TechShop Community</h2>
+            <p class="lead mb-4 opacity-75">Sign up today to track your orders and get early access to exclusive tech deals.</p>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-5">Create Account</a>
+            }
+            else
+            {
+                <a asp-controller="Products" asp-action="Index" class="btn btn-primary btn-lg px-5">Explore Shop</a>
+            }
+        </div>
+    </div>
 </div>
