@@ -69,17 +69,31 @@
             @foreach (var item in Model)
             {
                 <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden position-relative">
+                        @if(item.DiscountPercentage > 0)
+                        {
+                            <span class="badge bg-danger position-absolute top-0 end-0 m-3 shadow-sm" style="z-index: 10;">-@item.DiscountPercentage%</span>
+                        }
                         <div class="p-4 text-center">
                             <img src="@item.ImageUrl" class="img-fluid" style="height: 180px; object-fit: contain;" alt="@item.Name">
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="badge bg-light text-primary text-uppercase px-2 py-1 small">@item.Category.Name</span>
-                                <span class="fw-bold text-primary">@item.Price.ToString("c")</span>
+                                <div>
+                                    @if (item.DiscountPercentage > 0)
+                                    {
+                                        <span class="fw-bold text-primary">@((item.Price * (1 - item.DiscountPercentage / 100.0)).ToString("c"))</span>
+                                        <span class="text-muted small text-decoration-line-through ms-1">@item.Price.ToString("c")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="fw-bold text-primary">@item.Price.ToString("c")</span>
+                                    }
+                                </div>
                             </div>
                             <h5 class="card-title fw-bold mb-2">@item.Name</h5>
-                            <p class="card-text text-muted small">@item.Description</p>
+                            <p class="card-text text-muted small" style="height: 3rem; overflow: hidden;">@item.Description</p>
                         </div>
                         <div class="card-footer bg-white border-0 pb-4">
                             <div class="d-grid gap-2">

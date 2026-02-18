@@ -4,35 +4,38 @@
     ViewData["Title"] = "Update category";
 }
 
-<div class="row">
-    <div class="col-md-8 offset-2">
-        <p>
-            <h1>Update Category</h1>
-        </p>
-
-        <div class="row">
-            <div class="col-md-8 offset-2">
+<div class="row mt-4 mb-5">
+    <div class="col-md-6 offset-3">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-success text-white py-3">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-pencil-square"></i> Update Category</h4>
+            </div>
+            <div class="card-body p-4">
                 <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                     <input type="hidden" asp-for="Id" />
 
-                    <div class="form-group mb-2">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
                     <div class="form-group mb-3">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <label asp-for="Name" class="control-label fw-bold small text-uppercase"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Description" class="control-label fw-bold small text-uppercase"></label>
+                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
                     </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Update" class="btn btn-outline-success float-right" />
-                        <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                    <div class="form-group d-flex justify-content-between">
+                        <a class="btn btn-outline-secondary" asp-action="Index"><i class="bi bi-arrow-left"></i> Back to list</a>
+                        <button type="submit" class="btn btn-success px-5 shadow-sm"><i class="bi bi-check-lg"></i> Update Category</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

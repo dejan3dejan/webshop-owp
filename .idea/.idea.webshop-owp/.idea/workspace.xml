@@ -9,7 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4157373b-0a61-47f3-a8c9-babf14b56e04" name="Changes" comment="" />
+    <list default="true" id="4157373b-0a61-47f3-a8c9-babf14b56e04" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Views/Categories/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Categories/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Categories/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Categories/Delete.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Categories/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Categories/Edit.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Orders/Checkout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Orders/Checkout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Orders/OrderCompleted.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Orders/OrderCompleted.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Products/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Products/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Products/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Products/Delete.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Products/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Products/Edit.cshtml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,13 +45,16 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Controllers/CategoriesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Controllers/OrdersController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/AppDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/AppDbInitializer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/Cart/ShoppingCart.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/Services/CategoriesService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/Services/ICategoriesService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/Services/IOrdersService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/Services/IProductsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/Services/OrdersService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/Services/ProductsService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/Static/UserRoles.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ViewModels/NewProductDropdownsVM.cs" root0="FORCE_HIGHLIGHTING" />
@@ -144,6 +157,7 @@
       <workItem from="1770885610538" duration="4176000" />
       <workItem from="1771159127681" duration="2287000" />
       <workItem from="1771184554714" duration="8098000" />
+      <workItem from="1771332884107" duration="9274000" />
     </task>
     <servers />
   </component>
