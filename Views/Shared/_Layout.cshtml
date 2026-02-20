@@ -141,6 +141,8 @@
                                     location.reload(); // Refresh badge
                                 }
                             });
+                        } else {
+                            toastr.error(response.message || "Could not add item to cart.");
                         }
                     },
                     error: function() {

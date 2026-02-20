@@ -26,26 +26,40 @@ namespace webshop_owp.Data.Cart
             return new ShoppingCart(context) { ShoppingCartId = cartId };
         }
 
-        public void AddItemToCart(Product product)
+        public bool AddItemToCart(Product product)
         {
             var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Product.Id == product.Id && n.ShoppingCartId == ShoppingCartId);
 
             if (shoppingCartItem == null)
             {
-                shoppingCartItem = new ShoppingCartItem()
+                if (product.StockAmount > 0)
                 {
-                    ShoppingCartId = ShoppingCartId,
-                    Product = product,
-                    Amount = 1
-                };
-
-                _context.ShoppingCartItems.Add(shoppingCartItem);
+                    shoppingCartItem = new ShoppingCartItem()
+                    {
+                        ShoppingCartId = ShoppingCartId,
+                        Product = product,
+                        Amount = 1
+                    };
+                    _context.ShoppingCartItems.Add(shoppingCartItem);
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                shoppingCartItem.Amount++;
+                if (shoppingCartItem.Amount < product.StockAmount)
+                {
+                    shoppingCartItem.Amount++;
+                }
+                else
+                {
+                    return false;
+                }
             }
             _context.SaveChanges();
+            return true;
         }
 
         public void RemoveItemFromCart(Product product)
@@ -62,6 +76,17 @@ namespace webshop_owp.Data.Cart
                 {
                     _context.ShoppingCartItems.Remove(shoppingCartItem);
                 }
+            }
+            _context.SaveChanges();
+        }
+
+        public void ClearItemFromCart(Product product)
+        {
+            var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Product.Id == product.Id && n.ShoppingCartId == ShoppingCartId);
+
+            if (shoppingCartItem != null)
+            {
+                _context.ShoppingCartItems.Remove(shoppingCartItem);
             }
             _context.SaveChanges();
         }

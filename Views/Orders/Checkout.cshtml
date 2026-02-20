@@ -39,7 +39,28 @@
 
                 <div class="bg-light p-3 rounded-3 mb-4">
                     <h5 class="fw-bold"><i class="bi bi-info-circle"></i> Order Summary</h5>
-                    <p class="mb-0 small text-muted">By clicking "Place Order", you agree to our terms and conditions. Payment will be processed upon delivery.</p>
+                    <hr>
+                    <div class="list-group list-group-flush mb-3">
+                        @foreach (var item in (List<webshop_owp.Models.ShoppingCartItem>)ViewBag.ShoppingCartItems)
+                        {
+                            <div class="d-flex justify-content-between align-items-center mb-1 small">
+                                <span>@item.Product.Name x @item.Amount</span>
+                                <span class="fw-bold">@((item.Amount * (item.Product.DiscountPercentage > 0 ? item.Product.Price * (1 - item.Product.DiscountPercentage / 100.0) : item.Product.Price)).ToString("c"))</span>
+                            </div>
+                        }
+                    </div>
+                    @if (ViewBag.CouponCode != null)
+                    {
+                        <div class="d-flex justify-content-between align-items-center mb-1 small text-success">
+                            <span>Coupon (@ViewBag.CouponCode):</span>
+                            <span>-@ViewBag.DiscountPercentage%</span>
+                        </div>
+                    }
+                    <div class="d-flex justify-content-between align-items-center mt-2 pt-2 border-top">
+                        <span class="h5 mb-0">Total:</span>
+                        <span class="h4 mb-0 fw-bold text-primary">@(((double)ViewBag.ShoppingCartTotal).ToString("c"))</span>
+                    </div>
+                    <p class="mb-0 mt-3 small text-muted">By clicking "Place Order", you agree to our terms and conditions. Payment will be processed upon delivery.</p>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">

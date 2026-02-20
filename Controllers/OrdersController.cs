@@ -58,19 +58,23 @@ namespace webshop_owp.Controllers
             return View(response);
         }
 
-        [HttpPost]
         public async Task<IActionResult> AddToShoppingCart(int id)
         {
             var item = await _productsService.GetByIdAsync(id);
 
+            bool added = false;
             if (item != null)
             {
-                _shoppingCart.AddItemToCart(item);
+                added = _shoppingCart.AddItemToCart(item);
+                if (!added)
+                {
+                    TempData["Error"] = "Cannot add more items. Stock limit reached.";
+                }
             }
             
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                return Json(new { success = true, cartCount = _shoppingCart.GetShoppingCartItems().Count });
+                return Json(new { success = added, message = added ? "" : "Stock limit reached.", cartCount = _shoppingCart.GetShoppingCartItems().Count });
             }
 
             return RedirectToAction(nameof(ShoppingCart));
@@ -83,7 +87,24 @@ namespace webshop_owp.Controllers
             if (item != null)
             {
                 _shoppingCart.RemoveItemFromCart(item);
-                TempData["Info"] = "Item removed from cart.";
+            }
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return Json(new { success = true, cartCount = _shoppingCart.GetShoppingCartItems().Count });
+            }
+
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+
+        public async Task<IActionResult> ClearItemFromShoppingCart(int id)
+        {
+            var item = await _productsService.GetByIdAsync(id);
+
+            if (item != null)
+            {
+                _shoppingCart.ClearItemFromCart(item);
+                TempData["Info"] = "Product removed from cart.";
             }
             return RedirectToAction(nameof(ShoppingCart));
         }
@@ -94,7 +115,18 @@ namespace webshop_owp.Controllers
             var coupon = await _ordersService.GetCouponByCodeAsync(code);
             if (coupon != null)
             {
-                return Json(new { success = true, discount = coupon.DiscountPercentage });
+                HttpContext.Session.SetString("AppliedCoupon", code);
+                HttpContext.Session.SetInt32("CouponDiscount", (int)coupon.DiscountPercentage);
+                
+                var total = _shoppingCart.GetShoppingCartTotal();
+                var discountAmount = total * (coupon.DiscountPercentage / 100.0);
+                var newTotal = total - discountAmount;
+
+                return Json(new { 
+                    success = true, 
+                    discount = coupon.DiscountPercentage,
+                    newTotal = newTotal.ToString("c")
+                });
             }
             return Json(new { success = false, message = "Invalid or expired coupon code." });
         }
@@ -104,6 +136,23 @@ namespace webshop_owp.Controllers
         {
             var items = _shoppingCart.GetShoppingCartItems();
             if (items.Count == 0) return RedirectToAction("Index", "Products");
+
+            double total = _shoppingCart.GetShoppingCartTotal();
+            string couponCode = HttpContext.Session.GetString("AppliedCoupon");
+            
+            if (!string.IsNullOrEmpty(couponCode))
+            {
+                var coupon = await _ordersService.GetCouponByCodeAsync(couponCode);
+                if (coupon != null)
+                {
+                    total -= total * (coupon.DiscountPercentage / 100.0);
+                    ViewBag.CouponCode = couponCode;
+                    ViewBag.DiscountPercentage = coupon.DiscountPercentage;
+                }
+            }
+
+            ViewBag.ShoppingCartTotal = total;
+            ViewBag.ShoppingCartItems = items;
 
             if (User.Identity.IsAuthenticated)
             {
@@ -127,8 +176,15 @@ namespace webshop_owp.Controllers
             var items = _shoppingCart.GetShoppingCartItems();
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            await _ordersService.StoreOrderAsync(items, userId, checkoutVM.Email, checkoutVM.FullName, checkoutVM.Address, checkoutVM.City);
+            // Get coupon from session
+            string couponCode = HttpContext.Session.GetString("AppliedCoupon");
+
+            await _ordersService.StoreOrderAsync(items, userId, checkoutVM.Email, checkoutVM.FullName, checkoutVM.Address, checkoutVM.City, couponCode);
             await _shoppingCart.ClearShoppingCartAsync();
+
+            // Clear coupon session
+            HttpContext.Session.Remove("AppliedCoupon");
+            HttpContext.Session.Remove("CouponDiscount");
 
             TempData["Success"] = "Order placed successfully!";
             return View("OrderCompleted");

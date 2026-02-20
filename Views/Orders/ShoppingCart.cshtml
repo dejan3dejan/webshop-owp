@@ -34,13 +34,25 @@
                                 <div class="btn-group btn-group-sm">
                                     <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="RemoveFromShoppingCart" asp-route-id="@item.Product.Id">-</a>
                                     <span class="btn btn-light disabled fw-bold" style="width: 40px;">@item.Amount</span>
-                                    <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="AddToShoppingCart" asp-route-id="@item.Product.Id">+</a>
+                                    @if (item.Amount < item.Product.StockAmount)
+                                    {
+                                        <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="AddToShoppingCart" asp-route-id="@item.Product.Id">+</a>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-outline-secondary disabled" title="Stock limit reached">+</button>
+                                    }
                                 </div>
+                                @if (item.Amount >= item.Product.StockAmount)
+                                {
+                                    <div class="text-danger small mt-1" style="font-size: 0.7rem;">Limit reached (@item.Product.StockAmount)</div>
+                                }
                             </td>
                             <td class="text-end">@item.Product.Price.ToString("c")</td>
                             <td class="text-end fw-bold">@((item.Amount * item.Product.Price).ToString("c"))</td>
                             <td class="text-end">
-                                <a class="text-danger fs-5" asp-controller="Orders" asp-action="RemoveFromShoppingCart" asp-route-id="@item.Product.Id">
+                                <a class="text-danger fs-5" asp-controller="Orders" asp-action="ClearItemFromShoppingCart" asp-route-id="@item.Product.Id" 
+                                   onclick="return confirm('Are you sure you want to remove all items of this product?')">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>
@@ -87,11 +99,7 @@
             if(data.success) {
                 document.getElementById('couponMessage').innerHTML = "<span class='text-success'>Coupon applied! " + data.discount + "% discount.</span>";
                 toastr.success("Discount applied!");
-                // UI demonstration of discount calculation
-                var currentTotalStr = document.getElementById('cartTotal').innerText;
-                var currentTotal = parseFloat(currentTotalStr.replace(/[^0-9,.]/g, '').replace(',', '.'));
-                var newTotal = currentTotal * (1 - data.discount / 100.0);
-                document.getElementById('cartTotal').innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(newTotal);
+                document.getElementById('cartTotal').innerText = data.newTotal;
             } else {
                 document.getElementById('couponMessage').innerHTML = "<span class='text-danger'>" + data.message + "</span>";
                 toastr.error(data.message);

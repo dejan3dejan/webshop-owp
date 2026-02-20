@@ -23,7 +23,7 @@ namespace webshop_owp.Data.Services
             return orders;
         }
 
-        public async Task StoreOrderAsync(List<ShoppingCartItem> items, string userId, string userEmailAddress, string fullName, string address, string city)
+        public async Task StoreOrderAsync(List<ShoppingCartItem> items, string userId, string userEmailAddress, string fullName, string address, string city, string? couponCode = null)
         {
             double total = 0;
             foreach (var item in items)
@@ -36,6 +36,16 @@ namespace webshop_owp.Data.Services
                 total += price * item.Amount;
             }
 
+            double discountAmount = 0;
+            if (!string.IsNullOrEmpty(couponCode))
+            {
+                var coupon = await GetCouponByCodeAsync(couponCode);
+                if (coupon != null)
+                {
+                    discountAmount = total * (coupon.DiscountPercentage / 100.0);
+                }
+            }
+
             var order = new Order()
             {
                 UserId = userId,
@@ -43,7 +53,9 @@ namespace webshop_owp.Data.Services
                 FullName = fullName,
                 Address = address,
                 City = city,
-                TotalAmount = total
+                TotalAmount = total - discountAmount,
+                CouponCode = couponCode,
+                DiscountAmount = discountAmount
             };
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
