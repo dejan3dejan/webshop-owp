@@ -142,6 +142,6 @@ This project was developed for educational purposes as part of a university web 
 
 ## Contact
 
-Your Name - [Your Email or GitHub Profile]
+Your Name - dejan.zegarac0@gmail.com
 
-Project Link: [https://github.com/yourusername/webshop-owp](https://github.com/yourusername/webshop-owp)
+Project Link: (https://github.com/dejan3dejan/webshop-owp)
