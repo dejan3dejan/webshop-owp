@@ -10,15 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4157373b-0a61-47f3-a8c9-babf14b56e04" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Views/Categories/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Categories/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Categories/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Categories/Delete.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Categories/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Categories/Edit.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Orders/Checkout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Orders/Checkout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Orders/OrderCompleted.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Orders/OrderCompleted.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Products/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Products/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Products/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Products/Delete.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Products/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Products/Edit.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.webshop-owp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.webshop-owp/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,6 +150,9 @@
       <workItem from="1771159127681" duration="2287000" />
       <workItem from="1771184554714" duration="8098000" />
       <workItem from="1771332884107" duration="9274000" />
+      <workItem from="1771599843029" duration="1532000" />
+      <workItem from="1771951110291" duration="1267000" />
+      <workItem from="1771960491648" duration="6215000" />
     </task>
     <servers />
   </component>
