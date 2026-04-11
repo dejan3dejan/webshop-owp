@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace webshop_owp.Models
 {
-    public class ShoppingCartItem
+    public class ShoppingCartItem : IEntityBase
     {
         [Key]
         public int Id { get; set; }
