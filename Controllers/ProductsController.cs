@@ -14,27 +14,22 @@ namespace webshop_owp.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsService _service;
-        private readonly webshop_owp.Data.AppDbContext _context;
-
-        public ProductsController(IProductsService service, webshop_owp.Data.AppDbContext context)
+        public ProductsController(IProductsService service)
         {
             _service = service;
-            _context = context;
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> Index(int? categoryId, int pageNumber = 1)
         {
             int pageSize = 6;
-            var productsQuery = _context.Products.Include(n => n.Category).AsQueryable();
-
+            
             if (categoryId.HasValue)
             {
-                productsQuery = productsQuery.Where(p => p.CategoryId == categoryId.Value);
                 ViewBag.CurrentCategoryId = categoryId;
             }
 
-            var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery.AsNoTracking(), pageNumber, pageSize);
+            var paginatedProducts = await _service.GetPaginatedAsync(categoryId, pageNumber, pageSize);
             return View(paginatedProducts);
         }
 
@@ -42,15 +37,13 @@ namespace webshop_owp.Controllers
         public async Task<IActionResult> Filter(string searchString, int pageNumber = 1)
         {
             int pageSize = 6;
-            var productsQuery = _context.Products.Include(n => n.Category).AsQueryable();
-
+            
             if (!string.IsNullOrEmpty(searchString))
             {
-                productsQuery = productsQuery.Where(n => n.Name.Contains(searchString) || n.Description.Contains(searchString));
                 ViewBag.CurrentFilter = searchString;
             }
 
-            var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery.AsNoTracking(), pageNumber, pageSize);
+            var paginatedProducts = await _service.SearchAsync(searchString, pageNumber, pageSize);
             return View("Index", paginatedProducts);
         }
 
