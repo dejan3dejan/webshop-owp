@@ -4,6 +4,9 @@ using webshop_owp.Data.Base;
 
 namespace webshop_owp.Models
 {
+    /// <summary>
+    /// Represents a classification group for products to help organize the catalog.
+    /// </summary>
     public class Category : IEntityBase
     {
         [Key]
