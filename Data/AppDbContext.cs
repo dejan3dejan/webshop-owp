@@ -16,5 +16,6 @@ namespace webshop_owp.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<ProductView> ProductViews { get; set; }
     }
 }
