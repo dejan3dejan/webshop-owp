@@ -83,7 +83,7 @@
                                 <div>
                                     @if (item.DiscountPercentage > 0)
                                     {
-                                        <span class="fw-bold text-primary">@((item.Price * (1 - item.DiscountPercentage / 100.0)).ToString("c"))</span>
+                                        <span class="fw-bold text-primary">@((item.Price * (1 - item.DiscountPercentage / 100m)).ToString("c"))</span>
                                         <span class="text-muted small text-decoration-line-through ms-1">@item.Price.ToString("c")</span>
                                     }
                                     else

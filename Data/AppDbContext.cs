@@ -16,5 +16,15 @@ namespace webshop_owp.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Product>().Property(p => p.Price).HasPrecision(18, 2);
+            modelBuilder.Entity<Order>().Property(o => o.TotalAmount).HasPrecision(18, 2);
+            modelBuilder.Entity<Order>().Property(o => o.DiscountAmount).HasPrecision(18, 2);
+            modelBuilder.Entity<OrderItem>().Property(o => o.Price).HasPrecision(18, 2);
+        }
     }
 }

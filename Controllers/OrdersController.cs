@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +24,7 @@ namespace webshop_owp.Controllers
             _userManager = userManager;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -38,13 +40,13 @@ namespace webshop_owp.Controllers
             _shoppingCart.ShoppingCartItems = items;
 
             // Apply product-specific discounts to the total
-            double total = 0;
+            decimal total = 0;
             foreach (var item in items)
             {
                 var price = item.Product.Price;
                 if (item.Product.DiscountPercentage > 0)
                 {
-                    price = price * (1 - item.Product.DiscountPercentage / 100.0);
+                    price = price * (1 - item.Product.DiscountPercentage / 100m);
                 }
                 total += price * item.Amount;
             }
@@ -58,6 +60,8 @@ namespace webshop_owp.Controllers
             return View(response);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToShoppingCart(int id)
         {
             var item = await _productsService.GetByIdAsync(id);
@@ -80,6 +84,8 @@ namespace webshop_owp.Controllers
             return RedirectToAction(nameof(ShoppingCart));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveFromShoppingCart(int id)
         {
             var item = await _productsService.GetByIdAsync(id);
@@ -97,6 +103,8 @@ namespace webshop_owp.Controllers
             return RedirectToAction(nameof(ShoppingCart));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClearItemFromShoppingCart(int id)
         {
             var item = await _productsService.GetByIdAsync(id);
@@ -119,7 +127,7 @@ namespace webshop_owp.Controllers
                 HttpContext.Session.SetInt32("CouponDiscount", (int)coupon.DiscountPercentage);
                 
                 var total = _shoppingCart.GetShoppingCartTotal();
-                var discountAmount = total * (coupon.DiscountPercentage / 100.0);
+                var discountAmount = total * ((decimal)coupon.DiscountPercentage / 100m);
                 var newTotal = total - discountAmount;
 
                 return Json(new { 
@@ -137,7 +145,7 @@ namespace webshop_owp.Controllers
             var items = _shoppingCart.GetShoppingCartItems();
             if (items.Count == 0) return RedirectToAction("Index", "Products");
 
-            double total = _shoppingCart.GetShoppingCartTotal();
+            decimal total = _shoppingCart.GetShoppingCartTotal();
             string couponCode = HttpContext.Session.GetString("AppliedCoupon");
             
             if (!string.IsNullOrEmpty(couponCode))
@@ -145,7 +153,7 @@ namespace webshop_owp.Controllers
                 var coupon = await _ordersService.GetCouponByCodeAsync(couponCode);
                 if (coupon != null)
                 {
-                    total -= total * (coupon.DiscountPercentage / 100.0);
+                    total -= total * ((decimal)coupon.DiscountPercentage / 100m);
                     ViewBag.CouponCode = couponCode;
                     ViewBag.DiscountPercentage = coupon.DiscountPercentage;
                 }

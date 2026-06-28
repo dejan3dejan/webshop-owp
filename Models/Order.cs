@@ -16,9 +16,9 @@ namespace webshop_owp.Models
         public string Address { get; set; }
         public string City { get; set; }
 
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public string? CouponCode { get; set; }
-        public double DiscountAmount { get; set; }
+        public decimal DiscountAmount { get; set; }
 
         // Relacija: Jedna narudžbina ima više stavki
         public List<OrderItem> OrderItems { get; set; }

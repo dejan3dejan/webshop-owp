@@ -34,7 +34,7 @@ namespace webshop_owp.Controllers
                 ViewBag.CurrentCategoryId = categoryId;
             }
 
-            var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery.AsNoTracking(), pageNumber, pageSize);
+            var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery.OrderBy(p => p.Id).AsNoTracking(), pageNumber, pageSize);
             return View(paginatedProducts);
         }
 
@@ -50,7 +50,7 @@ namespace webshop_owp.Controllers
                 ViewBag.CurrentFilter = searchString;
             }
 
-            var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery.AsNoTracking(), pageNumber, pageSize);
+            var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery.OrderBy(p => p.Id).AsNoTracking(), pageNumber, pageSize);
             return View("Index", paginatedProducts);
         }
 

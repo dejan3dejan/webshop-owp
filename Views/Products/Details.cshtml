@@ -35,7 +35,7 @@
                             @if (Model.DiscountPercentage > 0)
                             {
                                 <div class="d-flex align-items-center gap-3">
-                                    <h2 class="text-primary fw-bold mb-0">@((Model.Price * (1 - Model.DiscountPercentage / 100.0)).ToString("c"))</h2>
+                                    <h2 class="text-primary fw-bold mb-0">@((Model.Price * (1 - Model.DiscountPercentage / 100m)).ToString("c"))</h2>
                                     <h4 class="text-muted text-decoration-line-through mb-0">@Model.Price.ToString("c")</h4>
                                 </div>
                             }

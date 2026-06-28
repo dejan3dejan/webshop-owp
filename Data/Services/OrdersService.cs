@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using webshop_owp.Models;
+using webshop_owp.Data.Static;
 
 namespace webshop_owp.Data.Services
 {
@@ -13,36 +14,38 @@ namespace webshop_owp.Data.Services
 
         public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string userRole)
         {
-            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Product).ToListAsync();
+            var query = _context.Orders
+                .Include(n => n.OrderItems).ThenInclude(n => n.Product)
+                .AsQueryable();
 
-            if (userRole != "Admin")
+            if (userRole != UserRoles.Admin)
             {
-                orders = orders.Where(n => n.UserId == userId).ToList();
+                query = query.Where(n => n.UserId == userId);
             }
 
-            return orders;
+            return await query.ToListAsync();
         }
 
         public async Task StoreOrderAsync(List<ShoppingCartItem> items, string userId, string userEmailAddress, string fullName, string address, string city, string? couponCode = null)
         {
-            double total = 0;
+            decimal total = 0;
             foreach (var item in items)
             {
                 var price = item.Product.Price;
                 if (item.Product.DiscountPercentage > 0)
                 {
-                    price = price * (1 - item.Product.DiscountPercentage / 100.0);
+                    price = price * (1 - item.Product.DiscountPercentage / 100m);
                 }
                 total += price * item.Amount;
             }
 
-            double discountAmount = 0;
+            decimal discountAmount = 0;
             if (!string.IsNullOrEmpty(couponCode))
             {
                 var coupon = await GetCouponByCodeAsync(couponCode);
                 if (coupon != null)
                 {
-                    discountAmount = total * (coupon.DiscountPercentage / 100.0);
+                    discountAmount = total * ((decimal)coupon.DiscountPercentage / 100m);
                 }
             }
 
@@ -71,7 +74,7 @@ namespace webshop_owp.Data.Services
                 var price = item.Product.Price;
                 if (item.Product.DiscountPercentage > 0)
                 {
-                    price = price * (1 - item.Product.DiscountPercentage / 100.0);
+                    price = price * (1 - item.Product.DiscountPercentage / 100m);
                 }
 
                 var orderItem = new OrderItem()

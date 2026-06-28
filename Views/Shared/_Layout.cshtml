@@ -35,6 +35,7 @@
     </style>
 </head>
 <body>
+    @Html.AntiForgeryToken()
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white mb-4 sticky-top">
             <div class="container-fluid px-4">
@@ -123,6 +124,7 @@
                 $.ajax({
                     url: '/Orders/AddToShoppingCart/' + productId,
                     type: 'POST',
+                    headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
                     success: function(response) {
                         if (response.success) {
                             Swal.fire({

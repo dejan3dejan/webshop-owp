@@ -16,7 +16,7 @@ namespace webshop_owp.Data.ViewModels
 
         [Display(Name = "Price in $")]
         [Required(ErrorMessage = "Price is required")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [Display(Name = "Image URL")]
         [Required(ErrorMessage = "Image URL is required")]

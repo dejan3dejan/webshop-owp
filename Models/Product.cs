@@ -15,7 +15,7 @@ namespace webshop_owp.Models
         public string Description { get; set; }
 
         [Required]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [Display(Name = "Image URL")]
         public string ImageUrl { get; set; }
