@@ -11,10 +11,10 @@ namespace webshop_owp.Models
 
         [Required(ErrorMessage = "Category name is required")]
         [Display(Name = "Category Name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Display(Name = "Description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         public List<Product>? Products { get; set; }
     }

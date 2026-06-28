@@ -27,8 +27,8 @@ namespace webshop_owp.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            string userRole = User.FindFirstValue(ClaimTypes.Role);
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string? userRole = User.FindFirstValue(ClaimTypes.Role);
 
             var orders = await _ordersService.GetOrdersByUserIdAndRoleAsync(userId, userRole);
             return View(orders);
@@ -146,7 +146,7 @@ namespace webshop_owp.Controllers
             if (items.Count == 0) return RedirectToAction("Index", "Products");
 
             decimal total = _shoppingCart.GetShoppingCartTotal();
-            string couponCode = HttpContext.Session.GetString("AppliedCoupon");
+            string? couponCode = HttpContext.Session.GetString("AppliedCoupon");
             
             if (!string.IsNullOrEmpty(couponCode))
             {
@@ -162,15 +162,18 @@ namespace webshop_owp.Controllers
             ViewBag.ShoppingCartTotal = total;
             ViewBag.ShoppingCartItems = items;
 
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity?.IsAuthenticated == true)
             {
                 var user = await _userManager.GetUserAsync(User);
-                var checkoutVM = new CheckoutVM()
+                if (user != null)
                 {
-                    FullName = user.FullName,
-                    Email = user.Email
-                };
-                return View(checkoutVM);
+                    var checkoutVM = new CheckoutVM()
+                    {
+                        FullName = user.FullName,
+                        Email = user.Email ?? string.Empty
+                    };
+                    return View(checkoutVM);
+                }
             }
 
             return View(new CheckoutVM());
@@ -182,10 +185,10 @@ namespace webshop_owp.Controllers
             if (!ModelState.IsValid) return View("Checkout", checkoutVM);
 
             var items = _shoppingCart.GetShoppingCartItems();
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // Get coupon from session
-            string couponCode = HttpContext.Session.GetString("AppliedCoupon");
+            string? couponCode = HttpContext.Session.GetString("AppliedCoupon");
 
             await _ordersService.StoreOrderAsync(items, userId, checkoutVM.Email, checkoutVM.FullName, checkoutVM.Address, checkoutVM.City, couponCode);
             await _shoppingCart.ClearShoppingCartAsync();

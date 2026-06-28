@@ -7,8 +7,8 @@ namespace webshop_owp.Data.Cart
     {
         public AppDbContext _context { get; set; }
 
-        public string ShoppingCartId { get; set; }
-        public List<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public string ShoppingCartId { get; set; } = string.Empty;
+        public List<ShoppingCartItem>? ShoppingCartItems { get; set; }
 
         public ShoppingCart(AppDbContext context)
         {
@@ -17,8 +17,8 @@ namespace webshop_owp.Data.Cart
         
         public static ShoppingCart GetCart(IServiceProvider services)
         {
-            ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-            var context = services.GetService<AppDbContext>();
+            ISession session = services.GetRequiredService<IHttpContextAccessor>().HttpContext!.Session;
+            var context = services.GetRequiredService<AppDbContext>();
             
             string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
             session.SetString("CartId", cartId);

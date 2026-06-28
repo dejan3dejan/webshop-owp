@@ -10,15 +10,15 @@ namespace webshop_owp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Product name is required")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         public decimal Price { get; set; }
 
         [Display(Name = "Image URL")]
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
 
         [Display(Name = "Inventory Stock")]
         public int StockAmount { get; set; } = 10;
@@ -28,6 +28,6 @@ namespace webshop_owp.Models
 
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
-        public Category? Category { get; set; }
+        public Category Category { get; set; } = null!;
     }
 }

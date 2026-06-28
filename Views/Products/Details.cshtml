@@ -72,7 +72,7 @@
                             </a>
                         </div>
                         
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
                         {
                             <hr class="my-4">
                             <div class="d-flex gap-2">

@@ -8,11 +8,11 @@ namespace webshop_owp.Data.ViewModels
 
         [Display(Name = "Product name")]
         [Required(ErrorMessage = "Name is required")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Display(Name = "Product description")]
         [Required(ErrorMessage = "Description is required")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Display(Name = "Price in $")]
         [Required(ErrorMessage = "Price is required")]
@@ -20,7 +20,7 @@ namespace webshop_owp.Data.ViewModels
 
         [Display(Name = "Image URL")]
         [Required(ErrorMessage = "Image URL is required")]
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
 
         [Display(Name = "Stock Quantity")]
         [Required(ErrorMessage = "Stock quantity is required")]

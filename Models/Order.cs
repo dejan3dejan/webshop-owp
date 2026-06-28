@@ -8,19 +8,19 @@ namespace webshop_owp.Models
         [Key]
         public int Id { get; set; }
 
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
         
         public string? UserId { get; set; } // Nullable za Guest checkout
 
-        public string FullName { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
+        public string FullName { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
 
         public decimal TotalAmount { get; set; }
         public string? CouponCode { get; set; }
         public decimal DiscountAmount { get; set; }
 
         // Relacija: Jedna narudžbina ima više stavki
-        public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItem> OrderItems { get; set; } = new();
     }
 }

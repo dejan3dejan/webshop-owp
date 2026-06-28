@@ -13,7 +13,7 @@ namespace webshop_owp.Data
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
+                var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
 
                 context.Database.Migrate();
 

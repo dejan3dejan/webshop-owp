@@ -12,7 +12,7 @@ namespace webshop_owp.Data.Services
             _context = context;
         }
 
-        public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string userRole)
+        public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string? userId, string? userRole)
         {
             var query = _context.Orders
                 .Include(n => n.OrderItems).ThenInclude(n => n.Product)
@@ -26,7 +26,7 @@ namespace webshop_owp.Data.Services
             return await query.ToListAsync();
         }
 
-        public async Task StoreOrderAsync(List<ShoppingCartItem> items, string userId, string userEmailAddress, string fullName, string address, string city, string? couponCode = null)
+        public async Task StoreOrderAsync(List<ShoppingCartItem> items, string? userId, string userEmailAddress, string fullName, string address, string city, string? couponCode = null)
         {
             decimal total = 0;
             foreach (var item in items)
@@ -89,7 +89,7 @@ namespace webshop_owp.Data.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Coupon> GetCouponByCodeAsync(string code)
+        public async Task<Coupon?> GetCouponByCodeAsync(string code)
         {
             return await _context.Coupons.FirstOrDefaultAsync(n => n.Code == code && n.IsActive);
         }

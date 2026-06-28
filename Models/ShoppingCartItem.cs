@@ -10,10 +10,10 @@ namespace webshop_owp.Models
         public int Id { get; set; }
         
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public Product Product { get; set; } = null!;
         
         public int Amount { get; set; }
         
-        public string ShoppingCartId { get; set; }  
+        public string ShoppingCartId { get; set; } = string.Empty;  
     }
 }

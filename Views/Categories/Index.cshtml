@@ -13,7 +13,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
-                @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
+                @if (User.Identity?.IsAuthenticated == true && User.IsInRole(UserRoles.Admin))
                 {
                     <th>Actions</th>
                 }
@@ -32,7 +32,7 @@
                     <td class="align-middle">
                         @item.Description
                     </td>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
+                    @if (User.Identity?.IsAuthenticated == true && User.IsInRole(UserRoles.Admin))
                     {
                         <td class="align-middle text-center">
                             <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i> Edit </a> |
@@ -47,7 +47,7 @@
     </div>
 </div>
 
-@if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
+@if (User.Identity?.IsAuthenticated == true && User.IsInRole(UserRoles.Admin))
 {
     <div style="position: fixed; right: 25px; bottom: 25px;" class="text-white">
         <a asp-controller="Categories" asp-action="Create" class="btn btn-success">

@@ -10,7 +10,7 @@ namespace webshop_owp.Models
         
         [Required]
         [Display(Name = "Coupon Code")]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
         
         [Required]
         [Range(1, 100)]
